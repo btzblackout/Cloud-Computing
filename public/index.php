@@ -2,6 +2,8 @@
 
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
+use MonoLog\Logger;
+use Monolog\Handler\StreamHandler;
 
 define('LARAVEL_START', microtime(true));
 
@@ -53,3 +55,19 @@ $response = $kernel->handle(
 )->send();
 
 $kernel->terminate($request, $response);
+
+// Create a log channel
+$logger = new Logger('info');
+$logger ->pushHandler(new StreamHandler(__DIR__.'/log_file.log', logger::DEBUG));
+
+//add records to the log
+//$logger->error("Test");
+//$logger->warning("This is a warning.");
+//$logger->info("test Test");
+//$logger ->info('My first log.');
+
+//$logger ->error('This is an error', ['username' => 'Mark']);
+
+//$loggerOrders = new Logger('orders');
+//  $loggerOrders -> pushHandler(new StreamHandler(__DIR__.'/log_file.log', logger::DEBUG));
+//$loggerOrders ->warning('Order has no address');
